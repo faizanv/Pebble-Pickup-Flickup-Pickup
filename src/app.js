@@ -13,6 +13,11 @@ var card = new UI.Card({
 card.show();
 
 
+var line = new UI.Card({
+        body: "Flick again",
+        scrollable: true
+      });
+//var flag = false;
 Accel.on('tap', newPickupLine);
 
 function newPickupLine() {
@@ -20,29 +25,24 @@ function newPickupLine() {
   var loading = new UI.Card({
     title:'Chill I am loading'
   });
+  line.hide();
   loading.show();
   // Get information
   
-  var line = new UI.Card({
-        title: "",
-        body: "Flick again",
-        scrollable: true
-      });
-  
   ajax(
-    { url: 'https://pebble-pickup.herokuapp.com/tweets/random'},
+    { url: 'http://pebble-pickup.faizanv.xyz/tweets/random'},
     function(data) {
       //var size = data.results.length;
       //var index = Math.floor(Math.random()*(size));
       console.log(data);
       data = JSON.parse(data);
       line.hide();
-      line = new UI.Card({
-        title: data.tweet,
-        body: "Flick again",
-        scrollable: true
-      });
+      line.title(data.tweet);
       loading.hide();
+//       if (!flag) {
+//         flag = true;
+//         line.show();
+//       }
       line.show();
     }, function(error) {
       console.log('error');
